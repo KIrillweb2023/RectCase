@@ -1,0 +1,51 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: "Gilroy", sans-serif;
+    box-sizing: border-box;
+
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+ol, li {
+    list-style-type: none;
+}
+
+a{
+    text-decoration: none;
+}
+
+
+button, input, textarea {
+    border: none;
+    outline: none;
+}
+
+*::before, *::after {
+    box-sizing: border-box;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+.container{
+    width: 65%;
+    display: block;
+    margin: 0 auto;
+}
+
+.main{
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    background: url("/Background.png") center center / cover no-repeat;
+    overflow-y: scroll;
+}
+
+.main::-webkit-scrollbar {
+    display: none;
+}

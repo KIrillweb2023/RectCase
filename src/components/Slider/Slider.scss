@@ -1,0 +1,91 @@
+.slider{
+    padding-top: 120px;
+    &__wrapper{
+        position: relative;
+    }
+    &-tab{
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 100%;
+        transition: .2ss all ease-in-out;
+        &:hover{
+            background: #ffffff49;
+        }
+    }
+    &__dotted{
+        display: flex;
+        position: absolute;
+        left: 50%;
+        bottom: 15px;
+        transform: translateX(-50%);
+        z-index: 2;
+        column-gap: 5px;
+        span{
+            width: 15px;
+            height: 15px;
+            border-radius: 100%;
+            background-color: none;
+            border: 1px solid #fff;
+            cursor: pointer;
+            &.active-tab{
+                background: #fff;
+                animation: slideEffect 1s;
+            }
+        }
+    }
+
+    &__prev{
+        left: -50px;
+       
+    }
+    &__next{
+        right: -50px;
+    }
+    &__container{
+        display: flex;
+        &_item{
+            position: relative;
+            height: 400px;
+            width: 100%;
+            display: none;
+
+            &-img{
+                height: 100%;
+                width: 100%;
+               
+            }
+            &-title{
+                position: absolute;
+                top: 150px;
+               
+                color: #fff;
+                font-weight: 600;
+                font-size: 32px;
+                left: 50px;
+                width: 55%;
+               
+            }
+
+            &.active-slide{
+                display: block;
+                animation: slideEffect 1s;
+            }
+        }
+    }
+}
+
+@keyframes slideEffect {
+    0%{
+        opacity: 0.3;
+    }
+    100%{
+        opacity: 1;
+    }
+}
