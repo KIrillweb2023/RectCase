@@ -43,7 +43,6 @@ export const SliderApi = () => {
 
         const dottes = refDotted.current.childNodes
 
-        const slideWidth = Math.ceil(+widthStatusSlide.slice(0, widthStatusSlide.length - 2));
 
         return {
             slideField,
@@ -52,8 +51,7 @@ export const SliderApi = () => {
             slides,
             nextTab,
             prevTab,
-            dottes,
-            slideWidth
+            dottes
         }
     }
 
@@ -63,14 +61,18 @@ export const SliderApi = () => {
         dottes.forEach(dott => dott.classList.remove('active-tab'))
     }
 
-    const tabTransformNext = ({slides, slideWidth}) => {
+    const tabTransformNext = ({slides, widthStatusSlide}) => {
+        const slideWidth = Math.ceil(+widthStatusSlide.slice(0, widthStatusSlide.length - 2));
+
         const newOffset = state.offset === slideWidth * (slides.length - 1) ? 0 : state.offset + slideWidth;
         const newSlideIndex = state.slideIndex === slides.length ? 1 : state.slideIndex + 1;
 
         dispatch({ type: 'NEXT_SLIDE', offset: newOffset, slideIndex: newSlideIndex });
     }
 
-    const tabTransformPrev = ({slides, slideWidth}) => {
+    const tabTransformPrev = ({slides, widthStatusSlide}) => {
+        const slideWidth = Math.ceil(+widthStatusSlide.slice(0, widthStatusSlide.length - 2));
+
         const newOffset = state.offset <= 0 ? slideWidth * (slides.length - 1) : state.offset - slideWidth;
         const newSlideIndex = state.slideIndex === 1 ? slides.length : state.slideIndex - 1;
 

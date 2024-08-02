@@ -1,6 +1,6 @@
-import "./Slider.scss";
-import { useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { SliderApi } from "../SliderApi/SliderApi";
+import "./Slider.scss";
 
 export const Slider = () => {
     const { 
@@ -19,6 +19,7 @@ export const Slider = () => {
 
     useEffect(() => {
         const {slideField} = _variables()
+
         _stylesSlider(_variables())
         dottesAddClassActive(state.slideIndex, _variables())
 
@@ -32,10 +33,10 @@ export const Slider = () => {
                 <div className="container">
                     <div className="slider__wrapper">
                         <div className="slider-tab slider__prev" ref={slidePrev} onClick={() => tabTransformPrev(_variables())}>
-                            <img src="/arrow-left.svg" alt="" />
+                            <img src="/arrow-left.svg" alt="Previous" />
                         </div>
                         <div className="slider-tab slider__next" ref={slideNext} onClick={() => tabTransformNext(_variables())}>
-                            <img src="/arrow-right.svg" alt="" />
+                            <img src="/arrow-right.svg" alt="Next" />
                         </div>
 
                         <div className="slider__dotted" ref={dotted}>
@@ -44,7 +45,7 @@ export const Slider = () => {
                             <span></span>
                             <span></span>
                         </div>
-                
+
                         <div className="slider__container" ref={slide}>
                             <div className="slider__content">
                                 <div className="slider__container_item">
@@ -66,9 +67,8 @@ export const Slider = () => {
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </>
-    ) 
-}
+    );
+};
