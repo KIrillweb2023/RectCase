@@ -1,4 +1,28 @@
-import { useState, useRef } from "react"
+import { useRef, useReducer } from "react"
+
+const initialState = {
+    offset: 0,
+    slideIndex: 1
+};
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'NEXT_SLIDE':
+            return {
+                ...state,
+                offset: action.offset,
+                slideIndex: action.slideIndex
+            };
+        case 'PREV_SLIDE':
+            return {
+                ...state,
+                offset: action.offset,
+                slideIndex: action.slideIndex
+            };
+        default:
+            return state;
+    }
+};
 
 export const SliderApi = () => {
     const slide = useRef(null)
@@ -6,8 +30,7 @@ export const SliderApi = () => {
     const slideNext = useRef(null)
     const dotted = useRef(null)
 
-    const [offset, setOffset] = useState(0)
-    const [slideIndex, setSlideIndex] = useState(1)
+    const [state, dispatch] = useReducer(reducer, initialState);
 
     const _variables = (refSlide = slide, refTabNext = slideNext, refTabPrev = slidePrev, refDotted = dotted) => {
         const slideField = refSlide.current.childNodes[0];
@@ -20,6 +43,8 @@ export const SliderApi = () => {
 
         const dottes = refDotted.current.childNodes
 
+        const slideWidth = Math.ceil(+widthStatusSlide.slice(0, widthStatusSlide.length - 2));
+
         return {
             slideField,
             slidesWrapper,
@@ -27,62 +52,41 @@ export const SliderApi = () => {
             slides,
             nextTab,
             prevTab,
-            dottes
+            dottes,
+            slideWidth
         }
     }
 
-    const _stylesSlider = ({slideField, slidesWrapper, slides}) => {
+    const _stylesSlider = ({slideField, widthStatusSlide, slides, dottes}) => {
         slideField.style.width = 100 * slides.length + "%";
-        slideField.style.display = "flex";
-        slideField.style.columnGap = "10px"
-        slideField.style.transition = "0.5s all";
-        slidesWrapper.style.overflow = "hidden";
+        slides.forEach(slide => slide.style.width = widthStatusSlide)
+        dottes.forEach(dott => dott.classList.remove('active-tab'))
     }
 
-    const _widthFixSlides = ({slides, widthStatusSlide}) => slides.forEach(slide => slide.style.width = widthStatusSlide);
-    
+    const tabTransformNext = ({slides, slideWidth}) => {
+        const newOffset = state.offset === slideWidth * (slides.length - 1) ? 0 : state.offset + slideWidth;
+        const newSlideIndex = state.slideIndex === slides.length ? 1 : state.slideIndex + 1;
 
-    const tabTransformNext = ({slides, widthStatusSlide, slideField}) => {
-        (offset == Math.ceil(+widthStatusSlide.slice(0, widthStatusSlide.length - 2) * (slides.length - 1))) 
-        ? 
-        setOffset(0)
-        : 
-        setOffset(index => {
-            return index += Math.ceil(+widthStatusSlide.slice(0, widthStatusSlide.length - 2))
-        })
-          
-        slideField.style.transform = `translateX(-${offset}px)`;
-        slideIndex == slides.length ? setSlideIndex(1) : setSlideIndex(index => index += 1);  
+        dispatch({ type: 'NEXT_SLIDE', offset: newOffset, slideIndex: newSlideIndex });
     }
 
-     
+    const tabTransformPrev = ({slides, slideWidth}) => {
+        const newOffset = state.offset <= 0 ? slideWidth * (slides.length - 1) : state.offset - slideWidth;
+        const newSlideIndex = state.slideIndex === 1 ? slides.length : state.slideIndex - 1;
 
-    const tabTransformPrev = ({slides, widthStatusSlide, slideField}) => {
-        offset <= 0 ? 
-        setOffset(index => index = Math.ceil(+widthStatusSlide.slice(0, widthStatusSlide.length - 2) * (slides.length - 1)))
-        :
-        setOffset(index => index -= Math.ceil(+widthStatusSlide.slice(0, widthStatusSlide.length - 2)))
-        
-        slideField.style.transform = `translateX(-${offset}px)`;
-    
-        slideIndex == 1 ? setSlideIndex(slides.length) : setSlideIndex(index => index -= 1);      
+        dispatch({ type: 'PREV_SLIDE', offset: newOffset, slideIndex: newSlideIndex });
     }
 
-    
-    const dottesRemoveClassActive = ({dottes}) => dottes.forEach(dott => dott.classList.remove('active-tab'))
     const dottesAddClassActive = (index, {dottes}) => dottes[index - 1].classList.add("active-tab")
 
 
     return { 
         _variables, 
         _stylesSlider, 
-        _widthFixSlides, 
         tabTransformNext, 
         tabTransformPrev, 
-        dottesRemoveClassActive, 
         dottesAddClassActive, 
-        offset,
-        slideIndex,
+        state,
         slideNext,
         slidePrev,
         dotted,

@@ -51,9 +51,15 @@
     &__next{
         right: -50px;
     }
-    
+    &__content{
+        display: flex;
+      
+        transition: 0.5s all;
+        column-gap: 10px;
+    }
     &__container{
         display: flex;
+        overflow: hidden;
         &_item{
             position: relative;
             height: 400px;

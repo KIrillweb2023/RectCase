@@ -6,13 +6,10 @@ export const Slider = () => {
     const { 
         _variables, 
         _stylesSlider, 
-        _widthFixSlides, 
         tabTransformNext, 
         tabTransformPrev, 
-        dottesRemoveClassActive, 
         dottesAddClassActive,
-        offset,
-        slideIndex,
+        state,
         slideNext,
         slidePrev,
         dotted,
@@ -23,14 +20,10 @@ export const Slider = () => {
     useEffect(() => {
         const {slideField} = _variables()
         _stylesSlider(_variables())
-        _widthFixSlides(_variables())
-        dottesRemoveClassActive(_variables())
-        dottesAddClassActive(slideIndex, _variables())
+        dottesAddClassActive(state.slideIndex, _variables())
 
-
-        slideField.style.transform = `translateX(-${offset}px)`;
-       
-    }, [offset])
+        slideField.style.transform = `translateX(-${state.offset}px)`;
+    }, [state.offset, state.slideIndex])
 
 
     return (
@@ -53,7 +46,7 @@ export const Slider = () => {
                         </div>
                 
                         <div className="slider__container" ref={slide}>
-                            <div className="slide__content">
+                            <div className="slider__content">
                                 <div className="slider__container_item">
                                     <img src="/slider/slide-one.png" alt="" className="slider__container_item-img" />
                                     <h2 className="slider__container_item-title">Открывайте кейсы и выбивайте из них уникальные предметы!</h2>
