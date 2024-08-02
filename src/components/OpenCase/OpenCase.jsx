@@ -3,12 +3,13 @@ import { useParams } from "react-router-dom";
 import "./OpenCase.scss";
 import { useRectCaseService } from "../../service/RectCaseService";
 import { Title } from "../Title/Title";
+import { Loader } from "../SVG/Loader/Loader";
 
 
 export const OpenCase = () => {
     const {caseID} = useParams()
     const [box, setBox] = useState(null) 
-    const {getCase} = useRectCaseService()
+    const {loaded, getCase} = useRectCaseService()
     
     useEffect(() => {
         updateCase()
@@ -22,12 +23,14 @@ export const OpenCase = () => {
         setBox(caseBox)
     }
 
-    const content = box != null ? <View caseBox={box}/> : null
+    const loading = loaded ? <Loader/> : null;
+    const content = box ? <View caseBox={box}/> : loading
     
     return (
         <>
           <section className="opening">
               <div className="container">
+                {/* {loading} */}
                 {content}   
               </div>
           </section>
@@ -41,7 +44,10 @@ const View = ({caseBox}) => {
     return (
         <>
             <div className="opening__previuw">
+               
+
                 <img src={imageCase} alt="" />
+               
                 <h3 className="opening__previuw_title">{nameCase}</h3>
                 <p className="opening__previuw_subtitle">НАЖМИТЕ ЧТОБЫ ОТКРЫТЬ!</p>
             </div>

@@ -1,6 +1,6 @@
 .opening{
     height: auto;
-    padding-top: 150px;
+    padding: 150px 0 50px 0;
     &__wrapper{
         width: 100%;
         overflow: hidden;
@@ -37,27 +37,28 @@
     }
     &__weapons{
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        grid-template-rows: repeat(auto-fill, 170px);
-        grid-auto-rows: 170px;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        grid-template-rows: repeat(auto-fill, minmax(150px, 1fr));
+        grid-auto-rows: 150px;
         margin-top: 50px;
         gap: 10px;
         &_item{
-            background: #ffffff21;
+            background: #00000063;
             display: flex;
             align-items: center;
             flex-direction: column;
             border-radius: 5px;
             position: relative;
+            padding: 10px 0;
             width: 100%;
             &-image{
-                width: 70%;
+                width: 60%;
             }
             &-title{
                 font-size: 16px;
                 color: #fff;
                 font-weight: 600;
-
+                margin-top: 10px;
             }
             &-skinName{
                 font-size: 14px;

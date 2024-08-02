@@ -2,7 +2,7 @@ import { useHttp } from "../hooks/http.hook";
 
 export const useRectCaseService = () => {
     const _apiUrl = "https://7eff46a25730df3d.mokky.dev/boxes";
-    const { request } = useHttp()
+    const { loaded, request } = useHttp()
 
     const getCases = async (url = _apiUrl) => {
         const res = await request(url)
@@ -24,5 +24,5 @@ export const useRectCaseService = () => {
         };
     };
 
-    return { getCases, getCase }
+    return { loaded, getCases, getCase }
 }

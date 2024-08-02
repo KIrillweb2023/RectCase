@@ -1,5 +1,8 @@
 .slider{
     padding-top: 120px;
+    .container{
+        width: 1110px;
+    }
     &__wrapper{
         position: relative;
     }
@@ -54,7 +57,7 @@
             position: relative;
             height: 400px;
             width: 100%;
-            display: none;
+          
 
             &-img{
                 height: 100%;
@@ -73,10 +76,7 @@
                
             }
 
-            &.active-slide{
-                display: block;
-                animation: slideEffect 1s;
-            }
+          
         }
     }
 }
