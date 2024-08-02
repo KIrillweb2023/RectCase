@@ -1,128 +1,47 @@
-import { useState} from "react";
 import "./Slider.scss";
-import { useRef } from "react";
 import { useEffect } from "react";
+import { SliderApi } from "../SliderApi/SliderApi";
 
 export const Slider = () => {
-    const slide = useRef(null)
-
-    const slidePrev = useRef(null)
-    const slideNext = useRef(null)
-    const dotted = useRef(null)
-
-    const [offset, setOffset] = useState(0)
-    const [slideIndex, setSlideIndex] = useState(1)
+    const { 
+        _variables, 
+        _stylesSlider, 
+        _widthFixSlides, 
+        tabTransformNext, 
+        tabTransformPrev, 
+        dottesRemoveClassActive, 
+        dottesAddClassActive,
+        offset,
+        slideIndex,
+        slideNext,
+        slidePrev,
+        dotted,
+        slide
+    } = SliderApi()
     
 
     useEffect(() => {
-        const {slideField, slidesWrapper, widthStatusSlide, slides, nextTab, prevTab, dottes} = _variables()
+        const {slideField} = _variables()
+        _stylesSlider(_variables())
+        _widthFixSlides(_variables())
+        dottesRemoveClassActive(_variables())
+        dottesAddClassActive(slideIndex, _variables())
 
 
-       
-        _stylesSlider()
-        _widthFixSlides()
-        dottesRemoveClassActive()
-        dottesAddClassActive(slideIndex)
-
-        console.log(dottes)
-
-         slideField.style.transform = `translateX(-${offset}px)`;
+        slideField.style.transform = `translateX(-${offset}px)`;
        
     }, [offset])
 
-    const _variables = () => {
-        const slideField = slide.current.childNodes[0];
-        const slidesWrapper = slide.current;
-        const widthStatusSlide = window.getComputedStyle(slidesWrapper).width;
-        const slides = slide.current.childNodes[0].childNodes;
-
-        const nextTab = slideNext.current;
-        const prevTab = slidePrev.current;
-
-        const dottes = dotted.current.childNodes
-
-        return {
-            slideField,
-            slidesWrapper,
-            widthStatusSlide,
-            slides,
-            nextTab,
-            prevTab,
-            dottes
-        }
-    }
-    
-    const _stylesSlider = () => {
-        const {slideField, slidesWrapper, slides} = _variables();
-
-        slideField.style.width = 100 * slides.length + "%";
-        slideField.style.display = "flex";
-        slideField.style.columnGap = "10px"
-        slideField.style.transition = "0.5s all";
-        slidesWrapper.style.overflow = "hidden";
-    }
-
-    const _widthFixSlides = () => {
-        const {slides, widthStatusSlide} = _variables();
-
-        slides.forEach((slide) => {
-            slide.style.width = widthStatusSlide;
-        });
-    }
-
-    const tabTransformNext = () => {
-        const {slides, widthStatusSlide, slideField} = _variables();
-
-        (offset == Math.ceil(+widthStatusSlide.slice(0, widthStatusSlide.length - 2) * (slides.length - 1))) 
-        ? 
-        setOffset(0)
-        : 
-        setOffset(index => {
-            console.log(index)
-            return index += Math.ceil(+widthStatusSlide.slice(0, widthStatusSlide.length - 2))
-        })
-          
-        slideField.style.transform = `translateX(-${offset}px)`;
-        slideIndex == slides.length ?  setSlideIndex(1) : setSlideIndex(index => index += 1);  
-
-    }
-
-    const tabTransformPrev = () => {
-        const {slides, widthStatusSlide, slideField} = _variables();
-
-        offset <= 0 ? 
-        setOffset(index => index = Math.ceil(+widthStatusSlide.slice(0, widthStatusSlide.length - 2) * (slides.length - 1)))
-        :
-        setOffset(index => index -= Math.ceil(+widthStatusSlide.slice(0, widthStatusSlide.length - 2)))
-        
-        slideField.style.transform = `translateX(-${offset}px)`;
-    
-        slideIndex == 1 ? setSlideIndex(slides.length) : setSlideIndex(index => index -= 1);      
-
-    }
-
-    const dottesRemoveClassActive = () => {
-        const {dottes} = _variables();
-
-        dottes.forEach((dott) => {
-            dott.classList.remove('active-tab')
-        })
-    }
-
-    const dottesAddClassActive = (index) => {
-        const {dottes} = _variables();
-        dottes[index - 1].classList.add("active-tab")
-    }
 
     return (
         <>
             <div className="slider">
                 <div className="container">
                     <div className="slider__wrapper">
-                        <div className="slider-tab slider__prev" ref={slidePrev} onClick={() => tabTransformPrev()}>
+                        <div className="slider-tab slider__prev" ref={slidePrev} onClick={() => tabTransformPrev(_variables())}>
                             <img src="/arrow-left.svg" alt="" />
                         </div>
-                        <div className="slider-tab slider__next" ref={slideNext} onClick={() => tabTransformNext()}>
+                        <div className="slider-tab slider__next" ref={slideNext} onClick={() => tabTransformNext(_variables())}>
                             <img src="/arrow-right.svg" alt="" />
                         </div>
 
@@ -158,6 +77,5 @@ export const Slider = () => {
                 </div>
             </div>
         </>
-    )
-    
+    ) 
 }

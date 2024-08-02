@@ -7,7 +7,7 @@ import { HomePage } from './pages/HomePage'
 import { InventoryPage } from './pages/InventoryPage'
 import { ActionPage } from './pages/ActionPage'
 import { OpenCasePage } from './pages/OpenCasePage'
-import { NotFoundPage } from './pages/NotFoundPage'
+import { NotFoundPage } from './pages/NotFoundPage/NotFoundPage'
 
 
 function App() {
