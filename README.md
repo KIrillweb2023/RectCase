@@ -4,7 +4,7 @@
   <!-- <a href="https://soumyajit.vercel.app/" target="_blank">E</a> -->
 </h2>
 <div align="center">
-    <img alt="Demo" src="./Preview.png" />
+    <img alt="Demo" src="./View/Preview.png" />
 </div>
 
 
