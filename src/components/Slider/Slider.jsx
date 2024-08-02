@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState} from "react";
 import "./Slider.scss";
 import { useRef } from "react";
 import { useEffect } from "react";
@@ -8,17 +8,23 @@ export const Slider = () => {
 
     const slidePrev = useRef(null)
     const slideNext = useRef(null)
+    const dotted = useRef(null)
 
     const [offset, setOffset] = useState(0)
     const [slideIndex, setSlideIndex] = useState(1)
+    
 
     useEffect(() => {
-        const {slideField, slidesWrapper, widthStatusSlide, slides, nextTab, prevTab} = _variables()
+        const {slideField, slidesWrapper, widthStatusSlide, slides, nextTab, prevTab, dottes} = _variables()
 
 
        
         _stylesSlider()
         _widthFixSlides()
+        dottesRemoveClassActive()
+        dottesAddClassActive(slideIndex)
+
+        console.log(dottes)
 
          slideField.style.transform = `translateX(-${offset}px)`;
        
@@ -33,6 +39,7 @@ export const Slider = () => {
         const nextTab = slideNext.current;
         const prevTab = slidePrev.current;
 
+        const dottes = dotted.current.childNodes
 
         return {
             slideField,
@@ -40,7 +47,8 @@ export const Slider = () => {
             widthStatusSlide,
             slides,
             nextTab,
-            prevTab
+            prevTab,
+            dottes
         }
     }
     
@@ -49,6 +57,7 @@ export const Slider = () => {
 
         slideField.style.width = 100 * slides.length + "%";
         slideField.style.display = "flex";
+        slideField.style.columnGap = "10px"
         slideField.style.transition = "0.5s all";
         slidesWrapper.style.overflow = "hidden";
     }
@@ -74,7 +83,7 @@ export const Slider = () => {
         })
           
         slideField.style.transform = `translateX(-${offset}px)`;
-        // slideIndex == slides.length ?  setSlideIndex(1) : setSlideIndex(index => index += 1);  
+        slideIndex == slides.length ?  setSlideIndex(1) : setSlideIndex(index => index += 1);  
 
     }
 
@@ -88,8 +97,21 @@ export const Slider = () => {
         
         slideField.style.transform = `translateX(-${offset}px)`;
     
-        // slideIndex == 1 ? setSlideIndex(slides.length) : setSlideIndex(index => index -= 1);      
+        slideIndex == 1 ? setSlideIndex(slides.length) : setSlideIndex(index => index -= 1);      
 
+    }
+
+    const dottesRemoveClassActive = () => {
+        const {dottes} = _variables();
+
+        dottes.forEach((dott) => {
+            dott.classList.remove('active-tab')
+        })
+    }
+
+    const dottesAddClassActive = (index) => {
+        const {dottes} = _variables();
+        dottes[index - 1].classList.add("active-tab")
     }
 
     return (
@@ -104,7 +126,7 @@ export const Slider = () => {
                             <img src="/arrow-right.svg" alt="" />
                         </div>
 
-                        <div className="slider__dotted">
+                        <div className="slider__dotted" ref={dotted}>
                             <span className="active-tab"></span>
                             <span></span>
                             <span></span>
