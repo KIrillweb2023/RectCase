@@ -13,9 +13,9 @@ import { NotFoundPage } from './pages/NotFoundPage/NotFoundPage'
 function App() {
     return (
         <>
-            <main className="main">
-                <Header/>
-
+        <div className="app">
+            <Header/>
+            <main>
                 <Routes>
                     <Route path='/' element={ <HomePage/> }/>
                     <Route path='/Action' element={ <ActionPage/> } />
@@ -25,6 +25,8 @@ function App() {
                 </Routes>
             
             </main>
+        </div>
+            
       
         </>
     )

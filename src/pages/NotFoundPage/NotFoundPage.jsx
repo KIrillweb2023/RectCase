@@ -2,7 +2,7 @@ import "./NotFoundPage.scss"
 
 export const NotFoundPage = () => {
     return (
-        <section className="notPage">
+        <div className="notPage">
             <div className="notPage__wrapper">
                 <h4 className="notPage__title">
                     404
@@ -10,6 +10,6 @@ export const NotFoundPage = () => {
                 <p className="notPage__subtitle">Not Found page</p>
                 <p className="notPage__descr">Возникла ошибка, такой страницы не существует!</p>
             </div>
-        </section>
+        </div>
     )
 }

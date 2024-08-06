@@ -2,8 +2,10 @@ import { OpenCase } from "../components/OpenCase/OpenCase"
 
 export const OpenCasePage = () => {
     return (
-        <>
-            <OpenCase/>
-        </>
+        <div className="opening">
+            <div className="container">
+                <OpenCase/>
+            </div>
+        </div>
     )
 }
